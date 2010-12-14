@@ -10,6 +10,9 @@ public class Grid_index {
     int pocet_objektov;
     int pocet_suradnic;
 
+
+
+
     public Grid_index(int pocet_objektov, int pocet_suradnic) {
         this.pocet_objektov = pocet_objektov;
         this.pocet_suradnic = pocet_suradnic;
@@ -34,5 +37,11 @@ public class Grid_index {
 
     public void setPocet_suradnic(int pocet_suradnic) {
         this.pocet_suradnic = pocet_suradnic;
+    }
+
+    private double median (){
+        double result = 0;
+
+        return result;
     }
 }
