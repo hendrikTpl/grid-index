@@ -10,8 +10,9 @@ public class main {
     public static void main (String[] args){
 
         System.out.println("HelloWorld");
-        Grid_index grid = new Grid_index(10,2);
+        Grid_index grid = new Grid_index(100,2);
         System.out.println(grid.median(1));
+        System.out.println(grid.pocetStranok());
 
 
     }
