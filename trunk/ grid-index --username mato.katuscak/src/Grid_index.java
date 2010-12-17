@@ -1,3 +1,7 @@
+import java.awt.*;
+import java.util.*;
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: re55095
@@ -10,6 +14,8 @@ public class Grid_index {
     int pocet_objektov;
     int pocet_suradnic;
     Point_Storage storage;
+    List<Integer> pocet_deleni;
+
 
 
 
@@ -26,6 +32,7 @@ public class Grid_index {
 
     public int getPocet_objektov() {
         return pocet_objektov;
+
     }
 
     public void setPocet_objektov(int pocet_objektov) {
@@ -39,6 +46,14 @@ public class Grid_index {
     public void setPocet_suradnic(int pocet_suradnic) {
         this.pocet_suradnic = pocet_suradnic;
     }
+
+
+    public int pocetStranok(){
+        int result = 0;
+        result = (int) Math.round((pocet_objektov / 100)*1.3);
+        return result;
+    }
+
 
     public double median (int suradnica){
         double result = 0;
