@@ -1,3 +1,4 @@
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 /**
@@ -53,5 +54,14 @@ public class Point {
         this.suradnice = suradnice;
     }
 
+    public int size(){
+        return 4 + 8*suradnice.size();
+    }
 
+    public void save(ByteBuffer bb){
+        bb.putInt(iD);
+        for(int i = 0; i< suradnice.size(); i++){
+            bb.putDouble(suradnice.get(i));
+        }
+    }
 }
