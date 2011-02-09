@@ -22,15 +22,17 @@ public class main {
     public static void main (String[] args) throws IOException {
 
         System.out.println("HelloWorld");
-        grid = new Index_Maker(150,2,60);
+        grid = new Index_Maker(50,4,60);
         System.out.println(grid.median(1));
         System.out.println(grid.pocetStranok());
         grid.setPocet_deleni();
         System.out.println(grid.getPocet_deleni());
+        System.out.println(grid.getRozdelenieIndexu());
+        System.out.println(grid.get_index_grid());
         
         //test na skusanie zapisu :)
 
-        File subor = new File("C:/1.moja");
+        //File subor = new File("C:/1.moja");
 
 
        //write_toFile(subor);
