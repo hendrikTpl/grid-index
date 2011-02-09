@@ -17,12 +17,12 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class main {
-   static Grid_index grid; 
+   static Index_Maker grid;
 
     public static void main (String[] args) throws IOException {
 
         System.out.println("HelloWorld");
-        grid = new Grid_index(150,2,60);
+        grid = new Index_Maker(150,2,60);
         System.out.println(grid.median(1));
         System.out.println(grid.pocetStranok());
         grid.setPocet_deleni();
