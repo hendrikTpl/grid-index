@@ -14,7 +14,22 @@ public class Index_Maker {
     int pocet_objektov;
     int pocet_suradnic;
     Point_Storage storage;
-    List<Integer> pocet_deleni;
+
+    public Index_Maker(int pocet_objektov, int pocet_suradnic, int velkost_stranky) {
+        this.pocet_objektov = pocet_objektov;
+        this.pocet_suradnic = pocet_suradnic;
+        this.velkost_stranky = velkost_stranky;
+        create_Index();
+    }
+
+    public Index_Maker(int pocet_suradnic, int velkost_stranky, Point_Storage storage) {
+
+        this.pocet_suradnic = pocet_suradnic;
+        this.velkost_stranky = velkost_stranky;
+        this.storage = storage;
+        this.pocet_objektov = storage.getPocet_objektov();
+    }
+
 
     public int getVelkost_stranky() {
         return velkost_stranky;
@@ -24,21 +39,6 @@ public class Index_Maker {
         return storage;
     }
 
-    public List<Integer> getPocet_deleni() {
-        return pocet_deleni;
-    }
-
-    private boolean kontrola() {
-        boolean resutl = false;
-        int temp = 1;
-        for (int i = 0; i < pocet_deleni.size(); i++) {
-            temp *= pocet_deleni.get(i);
-        }
-        if (temp >= pocetStranok())
-            resutl = true;
-
-        return resutl;
-    }
 
     private boolean kontrola(ArrayList<Integer> pom) {
         boolean resutl = false;
@@ -52,12 +52,6 @@ public class Index_Maker {
         return resutl;
     }
 
-    public Index_Maker(int pocet_objektov, int pocet_suradnic, int velkost_stranky) {
-        this.pocet_objektov = pocet_objektov;
-        this.pocet_suradnic = pocet_suradnic;
-        this.velkost_stranky = velkost_stranky;
-        create_Index();
-    }
 
     public void create_Index() {
         storage = new Point_Storage(pocet_objektov, pocet_suradnic);
@@ -123,8 +117,8 @@ public class Index_Maker {
         return result;
     }
 
-    public void setPocet_deleni() {
-
+    public ArrayList<Integer> getRozdelenieIndexu_median() {
+        ArrayList<Integer> pocet_deleni = new ArrayList<Integer>(pocet_objektov);
         int priemer = (int) Math.pow(pocetStranok(), 1. / pocet_suradnic);
         pocet_deleni = new ArrayList<Integer>();
         ArrayList<Double> mediany = new ArrayList<Double>(pocet_suradnic);
@@ -132,16 +126,16 @@ public class Index_Maker {
             pocet_deleni.add(priemer);
             mediany.add(median(i));
         }
-        while (!kontrola()) {
+        while (!kontrola(pocet_deleni)) {
             int index_m = mediany.indexOf(Collections.max(mediany));
             mediany.set(index_m, 0.0);
             pocet_deleni.set(index_m, pocet_deleni.get(index_m) + 1);
         }
 
-
+        return pocet_deleni;
     }
 
-    public ArrayList<Integer> getRozdelenieIndexu() {
+    public ArrayList<Integer> getRozdelenieIndexu_pocetnost() {
         ArrayList<Integer> result = new ArrayList<Integer>(pocet_suradnic);
         int priemer = (int) Math.pow(pocetStranok(), 1. / pocet_suradnic);
         ArrayList<Integer> pocer_hodnot = new ArrayList<Integer>(pocet_suradnic);
@@ -161,7 +155,7 @@ public class Index_Maker {
 
     public ArrayList<ArrayList<Double>> get_index_grid() {
         ArrayList<ArrayList<Double>> result = new ArrayList<ArrayList<Double>>();
-        ArrayList<Integer> delenia = getRozdelenieIndexu();
+        ArrayList<Integer> delenia = getRozdelenieIndexu_pocetnost();
         for (int i = 0; i < pocet_suradnic; i++) {
             ArrayList<Double> pas = new ArrayList<Double>();
             int objektov_v_pase = pocet_objektov / delenia.get(i);
@@ -170,10 +164,10 @@ public class Index_Maker {
                 pom.add(storage.getPoints().get(j).getSuradnice().get(i));
             }
             Collections.sort(pom);
-            for(int h = 1; h<=delenia.get(i);h++){
-               double jeden = pom.get(h*objektov_v_pase);
-               double druhy = pom.get(h*objektov_v_pase+1);
-               pas.add((jeden+druhy)/2);
+            for (int h = 1; h < delenia.get(i); h++) {
+                double jeden = pom.get(h * objektov_v_pase);
+                double druhy = pom.get(h * objektov_v_pase + 1);
+                pas.add((jeden + druhy) / 2);
             }
             result.add(pas);
         }

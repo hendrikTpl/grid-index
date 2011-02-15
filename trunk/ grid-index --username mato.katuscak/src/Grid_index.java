@@ -11,5 +11,10 @@ import java.util.List;
  */
 public class Grid_index {
 
+    int velkost_stranky;
+    int pocet_objektov;
+    int pocet_suradnic;
+    Cache cache;
 
+    
 }

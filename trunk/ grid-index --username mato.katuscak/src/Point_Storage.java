@@ -1,4 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,6 +27,26 @@ public class Point_Storage {
             points.add(new Point(pocet_suradnic,i));
         }
 
+    }
+
+    public Point_Storage(File f) throws FileNotFoundException {
+        points = new ArrayList<Point>();
+        Scanner sc = new Scanner(f);
+        Scanner lines = null;
+        int iD = 0;
+        while (sc.hasNextLine()){
+            String line = sc.nextLine();
+            lines = new Scanner(line);
+            ArrayList<Double> suradnice = new ArrayList<Double>();
+            while(lines.hasNextDouble()){
+                suradnice.add(lines.nextDouble());
+            }
+            Point bod = new Point(iD,suradnice);
+            points.add(bod);
+            iD++;
+        }
+        this.pocet_objektov = this.points.size();
+        sc.close();
     }
 
     @Override
