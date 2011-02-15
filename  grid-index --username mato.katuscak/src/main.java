@@ -1,13 +1,9 @@
-import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.nio.channels.FileChannel;
 import java.util.*;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,12 +18,16 @@ public class main {
     public static void main (String[] args) throws IOException {
 
         System.out.println("HelloWorld");
-        grid = new Index_Maker(50,4,60);
-        System.out.println(grid.median(1));
+        File f = new File("C:\\vstup.txt");
+        Point_Storage point = new Point_Storage(f);
+        grid = new Index_Maker(2,60,point);
+        //System.out.println(grid.median(1));
         System.out.println(grid.pocetStranok());
-        grid.setPocet_deleni();
-        System.out.println(grid.getPocet_deleni());
-        System.out.println(grid.getRozdelenieIndexu());
+        grid.getRozdelenieIndexu_median();
+        System.out.println(grid.getRozdelenieIndexu_median());
+        System.out.println(grid.getRozdelenieIndexu_pocetnost());
+        System.out.println(grid.pocet_roznych_hodnot(0));
+        System.out.println(grid.pocet_roznych_hodnot(1));
         System.out.println(grid.get_index_grid());
         
         //test na skusanie zapisu :)
