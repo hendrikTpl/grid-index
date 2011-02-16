@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public class Point {
 
-    int iD;
-    ArrayList<Double> suradnice;
+    private int iD;
+    private ArrayList<Double> suradnice;
 
     @Override
     public String toString() {

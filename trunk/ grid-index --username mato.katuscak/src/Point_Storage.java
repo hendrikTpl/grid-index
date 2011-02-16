@@ -12,8 +12,8 @@ import java.util.Scanner;
  */
 public class Point_Storage {
 
-    ArrayList<Point> points;
-    int pocet_objektov;
+    private ArrayList<Point> points;
+    private int pocet_objektov;
 
     public Point_Storage(ArrayList<Point> points, int pocet_objektov) {
         this.points = points;

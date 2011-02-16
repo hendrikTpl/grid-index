@@ -29,6 +29,7 @@ public class main {
         System.out.println(grid.pocet_roznych_hodnot(0));
         System.out.println(grid.pocet_roznych_hodnot(1));
         System.out.println(grid.get_index_grid());
+        System.out.println(new Grid_index(grid,f).cislo_stranky(grid.storage.getPoints().get(7)));
         
         //test na skusanie zapisu :)
 
