@@ -14,12 +14,16 @@ import java.util.LinkedList;
  */
 public class Cache {
 
-    HashMap<Long,Virtual_Page> offset_map;
-    LinkedList<Long> offset;
-    int kapacita;
-    int pageSize;
+    private HashMap<Long,Virtual_Page> offset_map;
+    private LinkedList<Long> offset;
+    private int kapacita;
+    private int pageSize;
     private File file;
     private RandomAccessFile raf;
     private ByteBuffer buffer;
     private FileChannel channel;
+
+    
+
+
 }
