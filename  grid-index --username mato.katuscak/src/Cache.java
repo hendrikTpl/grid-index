@@ -3,6 +3,7 @@ import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
@@ -22,6 +23,7 @@ public class Cache {
     private RandomAccessFile raf;
     private ByteBuffer buffer;
     private FileChannel channel;
+    private HashSet<Integer> platne_stranky;
 
     
 

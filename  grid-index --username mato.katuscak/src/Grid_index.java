@@ -26,6 +26,7 @@ public class Grid_index {
         this.struktura = maker.get_index_grid();
         this.rozdelenie_indexu = maker.getRozdelenieIndexu_pocetnost();
         this.pocet_suradnic = maker.pocet_suradnic;
+        int kapacita = maker.kapacita();
         this.cache = new Cache();
         pocet_zaidexovanych_bodov = 0;
     }

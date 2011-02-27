@@ -71,6 +71,11 @@ public class Index_Maker {
         return pocet_suradnic;
     }
 
+    public int kapacita(){
+         int kapacita = velkost_stranky / storage.getPoints().get(0).size();
+        return  kapacita;
+    }
+
     public void setPocet_suradnic(int pocet_suradnic) {
         this.pocet_suradnic = pocet_suradnic;
     }

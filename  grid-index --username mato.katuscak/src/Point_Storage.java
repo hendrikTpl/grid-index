@@ -32,14 +32,15 @@ public class Point_Storage {
     public Point_Storage(File f) throws FileNotFoundException {
         points = new ArrayList<Point>();
         Scanner sc = new Scanner(f);
-        Scanner lines = null;
+        Scanner lines;
         int iD = 0;
         while (sc.hasNextLine()){
             String line = sc.nextLine();
             lines = new Scanner(line);
             ArrayList<Double> suradnice = new ArrayList<Double>();
-            while(lines.hasNextDouble()){
-                suradnice.add(lines.nextDouble());
+            while(lines.hasNext()){
+                double cislo = lines.nextDouble();
+                suradnice.add(cislo);
             }
             Point bod = new Point(iD,suradnice);
             points.add(bod);
