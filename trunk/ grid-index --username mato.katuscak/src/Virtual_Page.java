@@ -1,5 +1,6 @@
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,37 +11,46 @@ import java.util.ArrayList;
  */
 public class Virtual_Page {
 
-    private long iD;
+    private int iD;
     private int fyzicka_kapacita;
-    private int pocet_objektov=0;
-    private ArrayList<Point> obsah = new ArrayList<Point>();
+    private int pocet_objektov;
+    private List<Real_Page> obsah;
     private boolean zmeneny = false;
-    private boolean preteceny = false;
-    private long adresa_pretecenej_stranky;
+    private int kapacita;
 
-    public Virtual_Page(int velkost_stranky, int iD){
+    public Virtual_Page(int velkost_stranky, int iD, int kapacita){
         pocet_objektov=0;
-        ArrayList<Point> obsah = new ArrayList<Point>();
-        zmeneny = false;
-        preteceny = false;
-        adresa_pretecenej_stranky = -1;
+        List<Real_Page> obsah = new ArrayList<Real_Page>();
+        Real_Page page = new Real_Page(iD,kapacita);
+        obsah.add(page);
+        zmeneny = true;
         fyzicka_kapacita = velkost_stranky;
         this.iD = iD;
+        this.kapacita = kapacita;
     }
 
 
+
+
     public void save(ByteBuffer bb){
-        bb.putInt(pocet_objektov);
-        for (Point p:obsah){
+        for (Real_Page p:obsah){
             p.save(bb);
         }
         
     }
     //objekty triedy VP si pridavaju Pointy do seba same, Cache nad nimi len zavola metody add.
     public void add(Point p){
-        obsah.add(p);
+        if(obsah.get(obsah.size()-1).isVojde()){
+            obsah.get(obsah.size()-1).add(p);
+            pocet_objektov++;
+            zmeneny = true;
+        }
+        Real_Page nova = new Real_Page(iD,kapacita);
+        nova.add(p);
         pocet_objektov++;
         zmeneny = true;
+        obsah.add(nova);
+
 
     }
 
