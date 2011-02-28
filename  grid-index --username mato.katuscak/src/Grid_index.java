@@ -17,6 +17,9 @@ public class Grid_index {
     ArrayList<ArrayList<Double>> struktura;
     ArrayList<Integer> rozdelenie_indexu;
     int pocet_suradnic;
+    int pocetStranok;
+    int kapacita;
+
     Cache cache;
     int pocet_zaidexovanych_bodov;
 
@@ -26,7 +29,8 @@ public class Grid_index {
         this.struktura = maker.get_index_grid();
         this.rozdelenie_indexu = maker.getRozdelenieIndexu_pocetnost();
         this.pocet_suradnic = maker.pocet_suradnic;
-        int kapacita = maker.kapacita();
+        this.kapacita = maker.kapacita();
+        this.pocetStranok = maker.pocetStranok();
         this.cache = new Cache();
         pocet_zaidexovanych_bodov = 0;
     }

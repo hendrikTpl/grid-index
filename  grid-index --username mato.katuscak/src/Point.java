@@ -1,3 +1,5 @@
+import com.sun.corba.se.spi.ior.Identifiable;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class Point {
         this.suradnice = suradnice;
     }
 
+
     public Point(int pocet_suradnic, int iD){
         this.iD = iD;
         suradnice = new ArrayList<Double>();
@@ -36,7 +39,7 @@ public class Point {
         System.out.println();
     }
 
-    
+
 
     public int getiD() {
         return iD;
