@@ -18,15 +18,23 @@ public class Virtual_Page {
     private boolean zmeneny = false;
     private int kapacita;
 
-    public Virtual_Page(int velkost_stranky, int iD, int kapacita){
+    public Virtual_Page(Grid_index index, int iD){
         pocet_objektov=0;
         List<Real_Page> obsah = new ArrayList<Real_Page>();
         Real_Page page = new Real_Page(iD,kapacita);
         obsah.add(page);
         zmeneny = true;
-        fyzicka_kapacita = velkost_stranky;
+        fyzicka_kapacita = index.velkost_stranky;
         this.iD = iD;
-        this.kapacita = kapacita;
+        this.kapacita = index.kapacita;
+    }
+
+    public Virtual_Page(ByteBuffer bb,int iD, int kapacita){
+        obsah = new ArrayList<Real_Page>(bb.getInt());
+        this.iD = iD;
+        for(int i = 0; i<obsah.size(); i++){
+
+        }
     }
 
 

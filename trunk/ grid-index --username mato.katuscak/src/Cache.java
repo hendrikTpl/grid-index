@@ -25,6 +25,7 @@ public class Cache {
     private FileChannel channel;
     private HashSet<Integer> platne_stranky;
 
+
     
 
 

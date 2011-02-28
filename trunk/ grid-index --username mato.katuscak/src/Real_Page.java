@@ -17,6 +17,14 @@ public class Real_Page{
     private int horna_hranica;
     private boolean vojde;
 
+    public Real_Page(ByteBuffer bb, int iD, int kapacita){
+        zoznam = new ArrayList<Point>(bb.getInt());
+        for(int i = 0; i<zoznam.size(); i++){
+
+        }
+
+    }
+
     public Real_Page(int iD, int pocetObjektov) {
         this.iD = iD;
         horna_hranica = pocetObjektov;
