@@ -11,16 +11,22 @@ import java.util.List;
  */
 public class Real_Page {
 
-    private int iD;
+    int iD;
     private List<Point> zoznam;
     private boolean zmeneny;
     private int horna_hranica;
     private boolean vojde;
 
-    public Real_Page(ByteBuffer bb, int iD, int kapacita) {
+    public Real_Page(ByteBuffer bb, int iD, int pocet_rozmerov,int kapacita) {
+        horna_hranica = kapacita;
         zoznam = new ArrayList<Point>(bb.getInt());
         for (int i = 0; i < zoznam.size(); i++) {
-
+            int iD_p = bb.getInt();
+            ArrayList<Double> zoznam_suradnic = new ArrayList(pocet_rozmerov);
+            for(int j = 0; j< pocet_rozmerov; j++){
+                zoznam_suradnic.add(bb.getDouble());
+            }
+            zoznam.add(new Point(iD_p, zoznam_suradnic));
         }
 
     }

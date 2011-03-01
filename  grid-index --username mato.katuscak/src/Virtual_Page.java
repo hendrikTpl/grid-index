@@ -30,12 +30,11 @@ public class Virtual_Page {
 
     }
 
-    public Virtual_Page(ByteBuffer bb, int iD, Grid_index index) {
+    public Virtual_Page(ArrayList<Real_Page> obsah, int iD, Grid_index index) {
         this.index = index;
         zmeneny = false;
-        obsah = new ArrayList<Real_Page>(bb.getInt());
         this.iD = iD;
-
+        this.obsah = obsah;
     }
 
     public void prida_RealPage(Point p) {
@@ -47,13 +46,6 @@ public class Virtual_Page {
         obsah.add(nova);
     }
 
-
-    public void save(ByteBuffer bb) {
-        for (Real_Page p : obsah) {
-            p.save(bb);
-        }
-
-    }
     //objekty triedy VP si pridavaju Pointy do seba same, Cache nad nimi len zavola metody add.
 
     public void add(Point p) {
@@ -65,4 +57,11 @@ public class Virtual_Page {
         prida_RealPage(p);
     }
 
+    public List<Real_Page> getObsah() {
+        return obsah;
+    }
+
+    public void setObsah(List<Real_Page> obsah) {
+        this.obsah = obsah;
+    }
 }
