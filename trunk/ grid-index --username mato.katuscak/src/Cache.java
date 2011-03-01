@@ -56,9 +56,24 @@ public class Cache {
 
     }
     //TREBA DOKONCIT SAVE NA ZAKLADE UKLADANIA STRANOK REAL A VIRTUAL PAGU
+
     public void savepage(Virtual_Page page) {
         buffer.clear();
-        
+        buffer.putInt(page.getObsah().size());
+        for (int i = 1; i < page.getObsah().size(); i++) {
+            buffer.putInt(page.getObsah().get(i).iD);
+        }
+        for (int i = 0; i < page.getObsah().size(); i++) {
+            page.getObsah().get(i).save(buffer);
+            buffer.rewind();
+            try {
+                channel.write(buffer, page.getObsah().get(i).iD * pageSize);
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            buffer.clear();
+        }
+        platne_stranky.add(page.iD);
 
     }
 
@@ -70,7 +85,28 @@ public class Cache {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         buffer.rewind();
-        return new Virtual_Page(buffer, iD, index);
+        int pocet_Real_Page = buffer.getInt();
+        ArrayList<Integer> zoznam_iD = new ArrayList<Integer>(pocet_Real_Page);
+        zoznam_iD.add(iD);
+        for (int i = 1; i > pocet_Real_Page; i++) {
+            zoznam_iD.add(buffer.getInt());
+        }
+        ArrayList<Real_Page> zoznam = new ArrayList<Real_Page>(pocet_Real_Page);
+        zoznam.add(new Real_Page(buffer, iD, index.pocet_suradnic,index.kapacita));
+        for (int i = 1; i < pocet_Real_Page; i++) {
+            buffer.clear();
+            try {
+                channel.read(buffer, zoznam_iD.get(i) * pageSize);
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            buffer.rewind();
+            zoznam.add(new Real_Page(buffer, zoznam_iD.get(i), index.pocet_suradnic,index.kapacita));
+
+
+        }
+
+        return new Virtual_Page(zoznam, iD, index);
 
 
     }
