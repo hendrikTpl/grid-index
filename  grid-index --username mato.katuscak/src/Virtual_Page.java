@@ -11,55 +11,58 @@ import java.util.List;
  */
 public class Virtual_Page {
 
-    private int iD;
-    private int fyzicka_kapacita;
+    int iD;
+    Grid_index index;
     private int pocet_objektov;
     private List<Real_Page> obsah;
-    private boolean zmeneny = false;
-    private int kapacita;
+    private boolean zmeneny;
 
-    public Virtual_Page(Grid_index index, int iD){
-        pocet_objektov=0;
+
+    public Virtual_Page(Grid_index index, int iD) {
+        this.iD = iD;
+        this.index = index;
+        pocet_objektov = 0;
         List<Real_Page> obsah = new ArrayList<Real_Page>();
-        Real_Page page = new Real_Page(iD,kapacita);
+        Real_Page page = new Real_Page(iD, index.kapacita);
         obsah.add(page);
         zmeneny = true;
-        fyzicka_kapacita = index.velkost_stranky;
-        this.iD = iD;
-        this.kapacita = index.kapacita;
+
+
     }
 
-    public Virtual_Page(ByteBuffer bb,int iD, int kapacita){
+    public Virtual_Page(ByteBuffer bb, int iD, Grid_index index) {
+        this.index = index;
+        zmeneny = false;
         obsah = new ArrayList<Real_Page>(bb.getInt());
         this.iD = iD;
-        for(int i = 0; i<obsah.size(); i++){
 
-        }
     }
 
-
-
-
-    public void save(ByteBuffer bb){
-        for (Real_Page p:obsah){
-            p.save(bb);
-        }
-        
-    }
-    //objekty triedy VP si pridavaju Pointy do seba same, Cache nad nimi len zavola metody add.
-    public void add(Point p){
-        if(obsah.get(obsah.size()-1).isVojde()){
-            obsah.get(obsah.size()-1).add(p);
-            pocet_objektov++;
-            zmeneny = true;
-        }
-        Real_Page nova = new Real_Page(iD,kapacita);
+    public void prida_RealPage(Point p) {
+        index.pocetStranok++;
+        Real_Page nova = new Real_Page(index.pocetStranok, index.kapacita);
         nova.add(p);
         pocet_objektov++;
         zmeneny = true;
         obsah.add(nova);
+    }
 
 
+    public void save(ByteBuffer bb) {
+        for (Real_Page p : obsah) {
+            p.save(bb);
+        }
+
+    }
+    //objekty triedy VP si pridavaju Pointy do seba same, Cache nad nimi len zavola metody add.
+
+    public void add(Point p) {
+        if (obsah.get(obsah.size() - 1).isVojde()) {
+            obsah.get(obsah.size() - 1).add(p);
+            pocet_objektov++;
+            zmeneny = true;
+        }
+        prida_RealPage(p);
     }
 
 }
