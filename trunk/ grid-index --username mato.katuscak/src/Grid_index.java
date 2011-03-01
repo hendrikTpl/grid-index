@@ -19,20 +19,19 @@ public class Grid_index {
     int pocet_suradnic;
     int pocetStranok;
     int kapacita;
-
     Cache cache;
-    int pocet_zaidexovanych_bodov;
+
 
     public Grid_index(Index_Maker maker, File file) {
-        this.velkost_stranky = maker.velkost_stranky;
-        this.pocet_objektov = maker.pocet_objektov;
-        this.struktura = maker.get_index_grid();
-        this.rozdelenie_indexu = maker.getRozdelenieIndexu_pocetnost();
-        this.pocet_suradnic = maker.pocet_suradnic;
-        this.kapacita = maker.kapacita();
-        this.pocetStranok = maker.pocetStranok();
-        this.cache = new Cache();
-        pocet_zaidexovanych_bodov = 0;
+        velkost_stranky = maker.velkost_stranky;
+        pocet_objektov = maker.pocet_objektov;
+        struktura = maker.get_index_grid();
+        rozdelenie_indexu = maker.getRozdelenieIndexu_pocetnost();
+        pocet_suradnic = maker.pocet_suradnic;
+        kapacita = maker.kapacita();
+        pocetStranok = maker.pocetStranok();
+        cache = new Cache(1000,velkost_stranky,file);
+
     }
 
 
@@ -50,13 +49,14 @@ public class Grid_index {
         int[] pomocne = new int[pocet_suradnic];
         pomocne[0] = 1;
 
-            for (int i = 1; i < pocet_suradnic; i++) {
-                pomocne[i] = pomocne[i - 1] * rozdelenie_indexu.get(i - 1);
-            }
-        
-        c: for (int i = 0; i < pocet_suradnic; i++) {
+        for (int i = 1; i < pocet_suradnic; i++) {
+            pomocne[i] = pomocne[i - 1] * rozdelenie_indexu.get(i - 1);
+        }
+
+        c:
+        for (int i = 0; i < pocet_suradnic; i++) {
             for (int j = rozdelenie_indexu.get(i) - 1; j > 0; j--) {
-                if (struktura.get(i).get(j-1) < p.getSuradnice().get(i)) {
+                if (struktura.get(i).get(j - 1) < p.getSuradnice().get(i)) {
                     koeficienty[i] = j;
                     continue c;
                 }

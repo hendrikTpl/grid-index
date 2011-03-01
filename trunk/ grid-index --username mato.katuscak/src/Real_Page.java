@@ -9,7 +9,7 @@ import java.util.List;
  * Time: 15:52
  * To change this template use File | Settings | File Templates.
  */
-public class Real_Page{
+public class Real_Page {
 
     private int iD;
     private List<Point> zoznam;
@@ -17,9 +17,9 @@ public class Real_Page{
     private int horna_hranica;
     private boolean vojde;
 
-    public Real_Page(ByteBuffer bb, int iD, int kapacita){
+    public Real_Page(ByteBuffer bb, int iD, int kapacita) {
         zoznam = new ArrayList<Point>(bb.getInt());
-        for(int i = 0; i<zoznam.size(); i++){
+        for (int i = 0; i < zoznam.size(); i++) {
 
         }
 
@@ -33,18 +33,18 @@ public class Real_Page{
         vojde = true;
     }
 
-    public void save(ByteBuffer bb){
+    public void save(ByteBuffer bb) {
         bb.putInt(zoznam.size());
-        for(Point p:zoznam){
+        for (Point p : zoznam) {
             p.save(bb);
         }
 
     }
 
-    public void add(Point p){
+    public void add(Point p) {
         zoznam.add(p);
         zmeneny = true;
-        if(horna_hranica<zoznam.size())
+        if (horna_hranica < zoznam.size())
             vojde = false;
 
 
