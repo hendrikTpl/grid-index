@@ -158,7 +158,7 @@ public class Cache {
         int pocet_Real_Page = buffer.getInt();
         ArrayList<Integer> zoznam_iD = new ArrayList<Integer>(pocet_Real_Page);
         zoznam_iD.add(iD);
-        for (int i = 1; i > pocet_Real_Page; i++) {
+        for (int i = 1; i < pocet_Real_Page; i++) {
             zoznam_iD.add(buffer.getInt());
         }
         ArrayList<Real_Page> zoznam = new ArrayList<Real_Page>(pocet_Real_Page);
