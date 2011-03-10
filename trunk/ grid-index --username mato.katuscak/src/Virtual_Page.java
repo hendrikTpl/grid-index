@@ -22,7 +22,7 @@ public class Virtual_Page {
         this.iD = iD;
         this.index = index;
         pocet_objektov = 0;
-        List<Real_Page> obsah = new ArrayList<Real_Page>();
+        obsah = new ArrayList<Real_Page>();
         Real_Page page = new Real_Page(iD, index.kapacita);
         obsah.add(page);
         zmeneny = true;
@@ -49,12 +49,22 @@ public class Virtual_Page {
     //objekty triedy VP si pridavaju Pointy do seba same, Cache nad nimi len zavola metody add.
 
     public void add(Point p) {
-        if (obsah.get(obsah.size() - 1).isVojde()) {
-            obsah.get(obsah.size() - 1).add(p);
+        Real_Page page = obsah.get(obsah.size()-1);
+        if (page.isVojde()) {
+            page.add(p);
             pocet_objektov++;
             zmeneny = true;
-        }
+        }else{
         prida_RealPage(p);
+        }
+    }
+
+    public boolean isZmeneny() {
+        return zmeneny;
+    }
+
+    public void setZmeneny(boolean zmeneny) {
+        this.zmeneny = zmeneny;
     }
 
     public List<Real_Page> getObsah() {
@@ -64,4 +74,6 @@ public class Virtual_Page {
     public void setObsah(List<Real_Page> obsah) {
         this.obsah = obsah;
     }
+
+
 }
