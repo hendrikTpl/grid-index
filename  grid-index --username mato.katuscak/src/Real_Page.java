@@ -19,8 +19,9 @@ public class Real_Page {
 
     public Real_Page(ByteBuffer bb, int iD, int pocet_rozmerov,int kapacita) {
         horna_hranica = kapacita;
-        zoznam = new ArrayList<Point>(bb.getInt());
-        for (int i = 0; i < zoznam.size(); i++) {
+        int pocet = bb.getInt();
+        zoznam = new ArrayList<Point>(pocet);
+        for (int i = 0; i < pocet; i++) {
             int iD_p = bb.getInt();
             ArrayList<Double> zoznam_suradnic = new ArrayList(pocet_rozmerov);
             for(int j = 0; j< pocet_rozmerov; j++){
@@ -31,11 +32,16 @@ public class Real_Page {
 
     }
 
+    @Override
+    public String toString() {
+        return zoznam.toString();
+    }
+
     public Real_Page(int iD, int pocetObjektov) {
         this.iD = iD;
         horna_hranica = pocetObjektov;
         zoznam = new ArrayList<Point>();
-        zmeneny = false;
+        zmeneny = true;
         vojde = true;
     }
 

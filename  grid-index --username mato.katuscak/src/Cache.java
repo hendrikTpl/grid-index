@@ -29,8 +29,9 @@ public class Cache {
         this.kapacita = kapacita;
         this.pageSize = pageSize;
         this.file = file;
-        offset_map = new HashMap<Integer, Virtual_Page>();
+        offset_map = new HashMap<Integer, Virtual_Page>(kapacita + 1);
         offset = new LinkedList<Integer>();
+        platne_stranky = new HashSet<Integer>();
     }
 
     public Virtual_Page getVirtual_Page(Grid_index index, int iD) {
@@ -38,9 +39,11 @@ public class Cache {
         if ((page = offset_map.get(iD)) != null) {
             return page;
         } else if (platne_stranky.contains(iD)) {
-            loadPage(index, iD);
+            page = loadPage(index, iD);
+            putPage(page);
         } else {
             page = new Virtual_Page(index, iD);
+            putPage(page);
             return page;
 
         }
@@ -49,8 +52,75 @@ public class Cache {
         return page;
     }
 
+    public void open(boolean newIndex) {
+
+        try {
+            if (!file.exists()) {
+                if (newIndex) {
+                    file.createNewFile();
+                    raf = new RandomAccessFile(file, "rw");
+                    raf.setLength(0);
+                } else {
+                    raf = new RandomAccessFile(file, "rw");
+                }
+            } else {
+                if (newIndex) {
+                    raf = new RandomAccessFile(file, "rw");
+                    raf.setLength(0);
+                } else {
+                    raf = new RandomAccessFile(file, "rw");
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        channel = raf.getChannel();
+        buffer = ByteBuffer.allocateDirect(pageSize);
+
+
+    }
+
+    public boolean isOpen() {
+
+		return raf != null;
+	}
+
+    public void close() {
+
+        for (Virtual_Page page : offset_map.values()) {
+            if (page.isZmeneny()) {
+                savepage(page);
+            }
+        }
+        offset_map.clear();
+        offset.clear();
+        buffer = null;
+        try {
+            channel.close();
+            channel = null;
+            raf.close();
+            raf = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
 
     public void putPage(Virtual_Page page) {
+        if (offset_map.size() == kapacita) {
+            Virtual_Page removedPage = offset_map.remove(offset.removeLast());
+            if (removedPage.isZmeneny()) {
+                savepage(removedPage);
+            }
+        }
         offset_map.put(page.iD, page);
         offset.addFirst(page.iD);
 
@@ -92,7 +162,7 @@ public class Cache {
             zoznam_iD.add(buffer.getInt());
         }
         ArrayList<Real_Page> zoznam = new ArrayList<Real_Page>(pocet_Real_Page);
-        zoznam.add(new Real_Page(buffer, iD, index.pocet_suradnic,index.kapacita));
+        zoznam.add(new Real_Page(buffer, iD, index.pocet_suradnic, index.kapacita));
         for (int i = 1; i < pocet_Real_Page; i++) {
             buffer.clear();
             try {
@@ -101,7 +171,7 @@ public class Cache {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             buffer.rewind();
-            zoznam.add(new Real_Page(buffer, zoznam_iD.get(i), index.pocet_suradnic,index.kapacita));
+            zoznam.add(new Real_Page(buffer, zoznam_iD.get(i), index.pocet_suradnic, index.kapacita));
 
 
         }

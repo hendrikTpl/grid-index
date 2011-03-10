@@ -30,15 +30,36 @@ public class Grid_index {
         pocet_suradnic = maker.pocet_suradnic;
         kapacita = maker.kapacita();
         pocetStranok = maker.pocetStranok();
-        cache = new Cache(1000,velkost_stranky,file);
+        cache = new Cache(1000, velkost_stranky, file);
+        cache.open(true);
+        cache.close();
+
 
     }
 
+    public void open() {
+        cache.open(false);
+    }
+
+    public void open(File file) {
+        cache.setFile(file);
+        cache.open(false);
+    }
+
+    public void close() {
+        cache.close();
+    }
+
+    public boolean isOpen() {
+        return cache.isOpen();
+    }
 
     //metoda bude vykonavat pridavanie bodu do indexu,  najprv sa zavola metoda cislo_stranky ktora podla struktury
     //vyrata kde sa ma bod ulozit, nasledne sa zavola metoda objektu cache
 
     public void add(Point p) {
+        cache.getVirtual_Page(this, cislo_stranky(p)).add(p);
+        pocet_objektov++;
 
     }
 
