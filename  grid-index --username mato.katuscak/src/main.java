@@ -21,7 +21,8 @@ public class main {
         File f = new File("C:\\vstup.txt");
         File file = new File("C:\\test.index");
         Point_Storage point = new Point_Storage(f);
-        grid = new Index_Maker(3, 100, point);
+        //Point_Storage point = new Point_Storage(100,3);
+        grid = new Index_Maker(3, 80, point);
         //System.out.println(grid.median(1));
         System.out.println(grid.pocetStranok());
         grid.getRozdelenieIndexu_median();
@@ -40,11 +41,11 @@ public class main {
             index.add(grid.storage.getPoints().get(i));
 
          }
-        //index.add(grid.storage.getPoints().get(0));
-        //index.add(grid.storage.getPoints().get(2));
+        index.add(grid.storage.getPoints().get(0));
+        index.add(grid.storage.getPoints().get(2));
         index.close();
         index.open();
-        Virtual_Page page = index.cache.loadPage(index,1);
+        Virtual_Page page = index.cache.loadPage(index,2);
         System.out.println(page.getObsah());
         Virtual_Page page1 = index.cache.loadPage(index,0);
         System.out.println(page1.getObsah());
