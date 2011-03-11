@@ -17,6 +17,7 @@ public class Real_Page {
     private int horna_hranica;
     private boolean vojde;
 
+
     public Real_Page(ByteBuffer bb, int iD, int pocet_rozmerov,int kapacita) {
         horna_hranica = kapacita;
         int pocet = bb.getInt();
@@ -29,7 +30,15 @@ public class Real_Page {
             }
             zoznam.add(new Point(iD_p, zoznam_suradnic));
         }
+        zmeneny = false;
+        vojde = true;
+        if(zoznam.size()>=kapacita)
+            vojde = false;
 
+    }
+
+    public List<Point> getZoznam() {
+        return zoznam;
     }
 
     @Override
@@ -56,7 +65,7 @@ public class Real_Page {
     public void add(Point p) {
         zoznam.add(p);
         zmeneny = true;
-        if (horna_hranica < zoznam.size())
+        if (horna_hranica <= zoznam.size())
             vojde = false;
 
 

@@ -20,8 +20,8 @@ public class main {
         System.out.println("HelloWorld");
         File f = new File("C:\\vstup.txt");
         File file = new File("C:\\test.index");
-        Point_Storage point = new Point_Storage(f);
-        //Point_Storage point = new Point_Storage(100,3);
+        //Point_Storage point = new Point_Storage(f);
+        Point_Storage point = new Point_Storage(100,3);
         grid = new Index_Maker(3, 80, point);
         //System.out.println(grid.median(1));
         System.out.println(grid.pocetStranok());
@@ -41,8 +41,8 @@ public class main {
             index.add(grid.storage.getPoints().get(i));
 
          }
-        index.add(grid.storage.getPoints().get(0));
-        index.add(grid.storage.getPoints().get(2));
+        //index.add(grid.storage.getPoints().get(0));
+        //index.add(grid.storage.getPoints().get(2));
         index.close();
         index.open();
         Virtual_Page page = index.cache.loadPage(index,2);
