@@ -23,7 +23,7 @@ public class Virtual_Page {
         this.index = index;
         pocet_objektov = 0;
         obsah = new ArrayList<Real_Page>();
-        Real_Page page = new Real_Page(iD, index.kapacita);
+        Real_Page page = new Real_Page(iD, index.kapacita );
         obsah.add(page);
         zmeneny = true;
 
@@ -44,18 +44,30 @@ public class Virtual_Page {
         pocet_objektov++;
         zmeneny = true;
         obsah.add(nova);
+        //kontrola_pretecenia(p);
+    }
+
+    private void kontrola_pretecenia(Point p) {
+
+        int first_page_size = 4+4*(obsah.size()-1)+4+obsah.get(0).getZoznam().size()*p.size();
+        //System.out.println("Velkost 1 strany"+first_page_size);
+        if(index.velkost_stranky < first_page_size){
+            Point remove = obsah.get(0).getZoznam().get(0);
+            obsah.get(0).getZoznam().remove(remove);
+            obsah.get(obsah.size()-1).add(remove);
+        }
     }
 
     //objekty triedy VP si pridavaju Pointy do seba same, Cache nad nimi len zavola metody add.
 
     public void add(Point p) {
-        Real_Page page = obsah.get(obsah.size()-1);
+        Real_Page page = obsah.get(obsah.size() - 1);
         if (page.isVojde()) {
             page.add(p);
             pocet_objektov++;
             zmeneny = true;
-        }else{
-        prida_RealPage(p);
+        } else {
+            prida_RealPage(p);
         }
     }
 
