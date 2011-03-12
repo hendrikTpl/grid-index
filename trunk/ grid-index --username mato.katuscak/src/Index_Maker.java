@@ -15,10 +15,13 @@ public class Index_Maker {
     int pocet_suradnic;
     Point_Storage storage;
 
+
+
     public Index_Maker(int pocet_objektov, int pocet_suradnic, int velkost_stranky) {
         this.pocet_objektov = pocet_objektov;
         this.pocet_suradnic = pocet_suradnic;
         this.velkost_stranky = velkost_stranky;
+
         create_Index();
     }
 
@@ -28,6 +31,7 @@ public class Index_Maker {
         this.velkost_stranky = velkost_stranky;
         this.storage = storage;
         this.pocet_objektov = storage.getPocet_objektov();
+
     }
 
 
@@ -72,8 +76,8 @@ public class Index_Maker {
     }
 
     public int kapacita(){
-         int kapacita = velkost_stranky / (storage.getPoints().get(0).size()+4);
-        System.out.println("kapacita je "+kapacita);
+        int kapacita = velkost_stranky / (storage.getPoints().get(0).size()+4);
+
         return  kapacita ;
     }
 

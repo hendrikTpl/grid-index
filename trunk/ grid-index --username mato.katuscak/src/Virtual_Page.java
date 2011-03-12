@@ -13,7 +13,7 @@ public class Virtual_Page {
 
     int iD;
     Grid_index index;
-    private int pocet_objektov;
+
     private List<Real_Page> obsah;
     private boolean zmeneny;
 
@@ -21,7 +21,6 @@ public class Virtual_Page {
     public Virtual_Page(Grid_index index, int iD) {
         this.iD = iD;
         this.index = index;
-        pocet_objektov = 0;
         obsah = new ArrayList<Real_Page>();
         Real_Page page = new Real_Page(iD, index.kapacita );
         obsah.add(page);
@@ -38,20 +37,22 @@ public class Virtual_Page {
     }
 
     public void prida_RealPage(Point p) {
+
         index.pocetStranok++;
         Real_Page nova = new Real_Page(index.pocetStranok, index.kapacita);
-        nova.add(p);
-        pocet_objektov++;
-        zmeneny = true;
         obsah.add(nova);
-        //kontrola_pretecenia(p);
+        nova.add(p);
+
+        zmeneny = true;
+
+        kontrola_pretecenia(p);
     }
 
     private void kontrola_pretecenia(Point p) {
 
         int first_page_size = 4+4*(obsah.size()-1)+4+obsah.get(0).getZoznam().size()*p.size();
-        //System.out.println("Velkost 1 strany"+first_page_size);
-        if(index.velkost_stranky < first_page_size){
+        System.out.println("Velkost 1 strany"+first_page_size);
+        if(index.velkost_stranky <= first_page_size){
             Point remove = obsah.get(0).getZoznam().get(0);
             obsah.get(0).getZoznam().remove(remove);
             obsah.get(obsah.size()-1).add(remove);
@@ -64,7 +65,7 @@ public class Virtual_Page {
         Real_Page page = obsah.get(obsah.size() - 1);
         if (page.isVojde()) {
             page.add(p);
-            pocet_objektov++;
+
             zmeneny = true;
         } else {
             prida_RealPage(p);

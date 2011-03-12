@@ -22,14 +22,14 @@ public class Cache {
     private RandomAccessFile raf;
     private ByteBuffer buffer;
     private FileChannel channel;
-    private HashSet<Integer> platne_stranky;
+    HashSet<Integer> platne_stranky;
 
 
     public Cache(int kapacita, int pageSize, File file) {
         this.kapacita = kapacita;
         this.pageSize = pageSize;
         this.file = file;
-        offset_map = new HashMap<Integer, Virtual_Page>(kapacita + 1);
+        offset_map = new HashMap<Integer, Virtual_Page>(kapacita );
         offset = new LinkedList<Integer>();
         platne_stranky = new HashSet<Integer>();
     }
@@ -41,6 +41,7 @@ public class Cache {
         } else if (platne_stranky.contains(iD)) {
             page = loadPage(index, iD);
             putPage(page);
+            return page;
         } else {
             page = new Virtual_Page(index, iD);
             putPage(page);
@@ -49,7 +50,7 @@ public class Cache {
         }
 
 
-        return page;
+
     }
 
     public void open(boolean newIndex) {
@@ -156,12 +157,15 @@ public class Cache {
         }
         buffer.rewind();
         int pocet_Real_Page = buffer.getInt();
+
         ArrayList<Integer> zoznam_iD = new ArrayList<Integer>(pocet_Real_Page);
         zoznam_iD.add(iD);
         for (int i = 1; i < pocet_Real_Page; i++) {
             zoznam_iD.add(buffer.getInt());
+
         }
         ArrayList<Real_Page> zoznam = new ArrayList<Real_Page>(pocet_Real_Page);
+
         zoznam.add(new Real_Page(buffer, iD, index.pocet_suradnic, index.kapacita));
         for (int i = 1; i < pocet_Real_Page; i++) {
             buffer.clear();

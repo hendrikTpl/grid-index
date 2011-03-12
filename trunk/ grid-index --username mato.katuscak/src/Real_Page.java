@@ -18,21 +18,23 @@ public class Real_Page {
     private boolean vojde;
 
 
-    public Real_Page(ByteBuffer bb, int iD, int pocet_rozmerov,int kapacita) {
+    public Real_Page(ByteBuffer bb, int iD, int pocet_rozmerov, int kapacita) {
+
         horna_hranica = kapacita;
         int pocet = bb.getInt();
-        zoznam = new ArrayList<Point>(pocet);
+        zoznam = new ArrayList<Point>();
         for (int i = 0; i < pocet; i++) {
             int iD_p = bb.getInt();
-            ArrayList<Double> zoznam_suradnic = new ArrayList(pocet_rozmerov);
-            for(int j = 0; j< pocet_rozmerov; j++){
+            ArrayList<Double> zoznam_suradnic = new ArrayList<Double>(pocet_rozmerov);
+            for (int j = 0; j < pocet_rozmerov; j++) {
+
                 zoznam_suradnic.add(bb.getDouble());
             }
             zoznam.add(new Point(iD_p, zoznam_suradnic));
         }
         zmeneny = false;
         vojde = true;
-        if(zoznam.size()>=kapacita)
+        if (zoznam.size() >= kapacita)
             vojde = false;
 
     }
