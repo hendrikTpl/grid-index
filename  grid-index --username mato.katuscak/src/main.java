@@ -20,9 +20,9 @@ public class main {
         System.out.println("HelloWorld");
         File f = new File("C:\\vstup.txt");
         File file = new File("C:\\test.index");
-        //Point_Storage point = new Point_Storage(f);
-        Point_Storage point = new Point_Storage(100,3);
-        grid = new Index_Maker(3, 80, point);
+        Point_Storage point = new Point_Storage(f);
+        //Point_Storage point = new Point_Storage(300, 2);
+        grid = new Index_Maker(3, 64, point);
         //System.out.println(grid.median(1));
         System.out.println(grid.pocetStranok());
         grid.getRozdelenieIndexu_median();
@@ -40,17 +40,20 @@ public class main {
         for (int i = 0; i < grid.pocet_objektov; i++) {
             index.add(grid.storage.getPoints().get(i));
 
-         }
+        }
+
         //index.add(grid.storage.getPoints().get(0));
         //index.add(grid.storage.getPoints().get(2));
         index.close();
         index.open();
-        Virtual_Page page = index.cache.loadPage(index,2);
-        System.out.println(page.getObsah());
-        Virtual_Page page1 = index.cache.loadPage(index,0);
-        System.out.println(page1.getObsah());
-        index.close();
 
+        System.out.println("Pocet stranok"+ index.pocetStranok);
+        for (Integer i : index.cache.platne_stranky) {
+            Virtual_Page page = index.cache.loadPage(index, i);
+            System.out.println(page.getObsah());
+
+        }
+        index.close();
 
         //test na skusanie zapisu :)
 

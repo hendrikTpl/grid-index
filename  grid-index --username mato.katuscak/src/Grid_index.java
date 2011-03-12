@@ -29,8 +29,12 @@ public class Grid_index {
         rozdelenie_indexu = maker.getRozdelenieIndexu_pocetnost();
         pocet_suradnic = maker.pocet_suradnic;
         kapacita = maker.kapacita();
-        pocetStranok = maker.pocetStranok();
-        cache = new Cache(1000, velkost_stranky, file);
+        int pocet = 1;
+        for (int i = 0; i < rozdelenie_indexu.size(); i++) {
+            pocet *= rozdelenie_indexu.get(i);
+        }
+        pocetStranok = pocet;
+        cache = new Cache(100, velkost_stranky, file);
         cache.open(true);
         cache.close();
 
