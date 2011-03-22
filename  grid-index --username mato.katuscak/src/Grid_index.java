@@ -94,4 +94,61 @@ public class Grid_index {
     }
 
 
+    public List<Point> hladaj_Rectangle(Point dolny_roh, List<Double> dlzdky) {
+        Set<Integer> stranky = new HashSet<Integer>();
+        ArrayList<Point> result = new ArrayList<Point>();
+        int[] pomocne = new int[pocet_suradnic];
+        pomocne[0] = 1;
+
+        int[] d_h = new int[pocet_suradnic];
+        int[] h_h = new int[pocet_suradnic];
+        int[] postupnost = new int[pocet_suradnic];
+
+        c:
+        for (int i = 0; i < pocet_suradnic; i++) {
+            for (int j = rozdelenie_indexu.get(i) - 1; j > 0; j--) {
+                if (struktura.get(i).get(j - 1) < dolny_roh.getSuradnice().get(i)) {
+                    d_h[i] = j;
+                    break;
+                }
+            }
+
+            for (int j = rozdelenie_indexu.get(i) - 1; j > 0; j--) {
+                if (struktura.get(i).get(j - 1) < (dolny_roh.getSuradnice().get(i)) + dlzdky.get(i)) {
+                    h_h[i] = j;
+                    continue c;
+                }
+            }
+        }
+
+
+        for (int i = 1; i < pocet_suradnic; i++) {
+            pomocne[i] = pomocne[i - 1] * rozdelenie_indexu.get(i - 1);
+        }
+
+        generuj_range(0, h_h, d_h, postupnost, result,pomocne);
+
+        return result;
+    }
+
+    private void generuj_range(int n, int[] h_h, int[] d_h, int[] postupnost, List<Point> result,int[] pomocne) {
+
+        for (int i = d_h[n]; i <= h_h[n]; i++) {
+            postupnost[n] = i;
+            if (n + 1 == pocet_suradnic) {
+                int cislo_stranky = 0;
+                for (int j = 0; j < pocet_suradnic; j++)
+                    cislo_stranky+=pomocne[j]*postupnost[j];    
+                System.out.println("Cisla na stiahnutie "+cislo_stranky);
+
+            } else {
+                generuj_range(++n, h_h, d_h, postupnost, result,pomocne);
+                n = 0;
+            }
+
+        }
+
+    }
+
+
 }

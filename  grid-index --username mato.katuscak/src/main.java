@@ -22,7 +22,7 @@ public class main {
         File file = new File("C:\\test.index");
         Point_Storage point = new Point_Storage(f);
         //Point_Storage point = new Point_Storage(300, 2);
-        grid = new Index_Maker(3, 64, point);
+        grid = new Index_Maker(2, 64, point);
         //System.out.println(grid.median(1));
         System.out.println(grid.pocetStranok());
         grid.getRozdelenieIndexu_median();
@@ -53,6 +53,10 @@ public class main {
             System.out.println(page.getObsah());
 
         }
+        ArrayList<Double> dlzky = new ArrayList<Double>();
+        dlzky.add(1.);
+        dlzky.add(1.);
+        index.hladaj_Rectangle(grid.getStorage().getPoints().get(9),dlzky);
         index.close();
 
         //test na skusanie zapisu :)
