@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.io.File;
 import java.util.*;
 import java.util.List;
@@ -34,7 +33,7 @@ public class Grid_index {
             pocet *= rozdelenie_indexu.get(i);
         }
         pocetStranok = pocet;
-        cache = new Cache(100, velkost_stranky, file);
+        cache = new Cache(10, velkost_stranky, file);
         cache.open(true);
         cache.close();
 
@@ -96,7 +95,7 @@ public class Grid_index {
 
     public List<Point> hladaj_Rectangle(Point dolny_roh, List<Double> dlzdky) {
         Set<Integer> stranky = new HashSet<Integer>();
-        ArrayList<Point> result = new ArrayList<Point>();
+        List<Point> result = new ArrayList<Point>();
         int[] pomocne = new int[pocet_suradnic];
         pomocne[0] = 1;
 
@@ -126,24 +125,50 @@ public class Grid_index {
             pomocne[i] = pomocne[i - 1] * rozdelenie_indexu.get(i - 1);
         }
 
-        generuj_range(0, h_h, d_h, postupnost, result,pomocne);
+        generuj_range(0, h_h, d_h, postupnost, result, pomocne);
 
+        result = kontrola_hranic_range(result, dlzdky, dolny_roh);
         return result;
     }
 
-    private void generuj_range(int n, int[] h_h, int[] d_h, int[] postupnost, List<Point> result,int[] pomocne) {
+    private List<Point> kontrola_hranic_range(List<Point> zdroj, List<Double> dlzky, Point dolny_roh) {
+        List<Point> result = new ArrayList<Point>();
+        for (Point p : zdroj) {
+            boolean plati = false;
+            for (int i = 0; i < pocet_suradnic; i++) {
+                if ((p.getSuradnice().get(i) >= dolny_roh.getSuradnice().get(i)) && (p.getSuradnice().get(i) <= (dolny_roh.getSuradnice().get(i) + dlzky.get(i)))) {
+                    plati = true;
+                } else {
+                    plati = false;
+                    break;
+                }
+            }
+            if (plati)
+                result.add(p);
+
+        }
+        return result;
+    }
+
+
+    private void generuj_range(int n, int[] h_h, int[] d_h, int[] postupnost, List<Point> result, int[] pomocne) {
 
         for (int i = d_h[n]; i <= h_h[n]; i++) {
             postupnost[n] = i;
             if (n + 1 == pocet_suradnic) {
                 int cislo_stranky = 0;
                 for (int j = 0; j < pocet_suradnic; j++)
-                    cislo_stranky+=pomocne[j]*postupnost[j];    
-                System.out.println("Cisla na stiahnutie "+cislo_stranky);
+                    cislo_stranky += pomocne[j] * postupnost[j];
+                if (cache.platne_stranky.contains(cislo_stranky)) {
+                    Virtual_Page page = cache.loadPage(this, cislo_stranky);
+                    for (Real_Page p : page.getObsah())
+                        result.addAll(p.getZoznam());
+                }
+
 
             } else {
-                generuj_range(++n, h_h, d_h, postupnost, result,pomocne);
-                n = 0;
+                generuj_range(++n, h_h, d_h, postupnost, result, pomocne);
+                n --;
             }
 
         }
