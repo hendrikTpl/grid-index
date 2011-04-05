@@ -20,10 +20,14 @@ public class main {
         System.out.println("HelloWorld");
         File f = new File("C:\\vstup.txt");
         File file = new File("C:\\test.index");
-        //Point_Storage point = new Point_Storage(f);
-        Point_Storage point = new Point_Storage(100, 4);
-        grid = new Index_Maker(4, 190, point);
+        File index_file = new File("C:\\index_file.idf");
+        Point_Storage point = new Point_Storage(f);
+        //Point_Storage point = new Point_Storage(300, 2);
+        grid = new Index_Maker(2, 64, point);
+        //System.out.println(grid.median(1));
         System.out.println(grid.pocetStranok());
+        grid.getRozdelenieIndexu_median();
+        System.out.println(grid.getRozdelenieIndexu_median());
         System.out.println(grid.getRozdelenieIndexu_pocetnost());
         System.out.println(grid.pocet_roznych_hodnot(0));
         System.out.println(grid.pocet_roznych_hodnot(1));
@@ -39,24 +43,44 @@ public class main {
 
         }
 
+        //index.add(grid.storage.getPoints().get(0));
+        //index.add(grid.storage.getPoints().get(2));
         index.close();
-        index.open();
+        index.serializeTo(index_file);
 
-        ArrayList<Double> ll = new ArrayList<Double>();
-        ll.add(.5);
-        ll.add(.5);
-        ll.add(.5);
-        ll.add(.5);
+        Grid_index index2 = Grid_index.serializeFrom(index_file);
+        index2.open();
 
-        System.out.println("Vysledok vyhladavaia: " + index.hladaj_Rectangle(grid.getStorage().getPoints().get(0), ll));
-
-        System.out.println("Pocet stranok" + index.pocetStranok);
-        for (Integer i : index.cache.platne_stranky) {
-            Virtual_Page page = index.cache.loadPage(index, i);
+        for (Integer i : index2.cache.platne_stranky) {
+            Virtual_Page page = index2.cache.loadPage(index, i);
             System.out.println(page.getObsah());
 
         }
-        index.close();
+        index2.close();
+        //index.open();
+
+
+        //for (Integer i : index.cache.platne_stranky) {
+        //  Virtual_Page page = index.cache.loadPage(index, i);
+        // System.out.println(page.getObsah());
+
+        //}
+        //ArrayList<Double> dlzky = new ArrayList<Double>();
+        //dlzky.add(0.);
+        //dlzky.add(0.);
+        //System.out.println("Vysledok hladania"+ index.hladaj_Rectangle(grid.getStorage().getPoints().get(0),dlzky));
+        //index.close();
+
+        //test na skusanie zapisu :)
+
+        //File subor = new File("C:/1.moja");
+
+
+        //write_toFile(subor);
+        // read_file(subor);
+
 
     }
+
+   
 }

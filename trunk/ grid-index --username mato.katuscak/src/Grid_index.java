@@ -1,4 +1,4 @@
-import java.io.File;
+import java.io.*;
 import java.util.*;
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * Time: 12:17:11
  * To change this template use File | Settings | File Templates.
  */
-public class Grid_index {
+public class Grid_index implements Serializable {
 
     int velkost_stranky;
     int pocet_objektov;
@@ -126,8 +126,9 @@ public class Grid_index {
         }
 
         generuj_range(0, h_h, d_h, postupnost, result, pomocne);
-
+        System.out.println("Pred kontrolou " + result);
         result = kontrola_hranic_range(result, dlzdky, dolny_roh);
+
         return result;
     }
 
@@ -168,11 +169,53 @@ public class Grid_index {
 
             } else {
                 generuj_range(++n, h_h, d_h, postupnost, result, pomocne);
-                n --;
+                n--;
             }
 
         }
 
+    }
+
+    public void serializeTo(File file) {
+
+        boolean wasOpen = isOpen();
+
+        if (wasOpen) {
+            close();
+        }
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(this);
+
+            oos.close();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (wasOpen) {
+            open();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Grid_index serializeFrom(File file) {
+
+        Grid_index index = null;
+
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            index = (Grid_index) ois.readObject();
+
+            ois.close();
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return index;
     }
 
 

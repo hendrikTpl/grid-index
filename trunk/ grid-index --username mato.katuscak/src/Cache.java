@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.*;
@@ -12,7 +13,7 @@ import java.util.*;
  * Time: 19:46:14
  * To change this template use File | Settings | File Templates.
  */
-public class Cache {
+public class Cache implements Serializable{
 
     private Map<Integer, Virtual_Page> offset_map;
     private LinkedList<Integer> offset;
