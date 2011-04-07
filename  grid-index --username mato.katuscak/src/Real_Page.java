@@ -20,6 +20,7 @@ public class Real_Page {
 
     public Real_Page(ByteBuffer bb, int iD, int pocet_rozmerov, int kapacita) {
 
+        this.iD = iD;
         horna_hranica = kapacita;
         int pocet = bb.getInt();
         zoznam = new ArrayList<Point>();

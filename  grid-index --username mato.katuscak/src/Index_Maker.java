@@ -1,6 +1,5 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,6 +13,7 @@ public class Index_Maker {
     int pocet_objektov;
     int pocet_suradnic;
     Point_Storage storage;
+    ArrayList<Integer> rozdelenie;
 
 
 
@@ -114,16 +114,13 @@ public class Index_Maker {
 
     public int pocet_roznych_hodnot(int suradnica) {
         int result = 0;
-        ArrayList<Double> pom = new ArrayList<Double>(pocet_objektov);
+        Set<Double> temp2 = new HashSet<Double>();
+
         for (int i = 0; i < pocet_objektov; i++) {
-            pom.add(storage.getPoints().get(i).getSuradnice().get(suradnica));
+            temp2.add(storage.getPoints().get(i).getSuradnice().get(suradnica));
         }
-        ArrayList<Double> temp = new ArrayList<Double>();
-        for (double a : pom) {
-            if (!temp.contains(a))
-                temp.add(a);
-        }
-        result = temp.size();
+
+        result = temp2.size();
         return result;
     }
 
@@ -146,24 +143,29 @@ public class Index_Maker {
     }
 
     public ArrayList<Integer> getRozdelenieIndexu_pocetnost() {
+        System.out.println("Pocitam pocetnost indexu");
         ArrayList<Integer> result = new ArrayList<Integer>(pocet_suradnic);
         int priemer = (int) Math.pow(pocetStranok(), 1. / pocet_suradnic);
         ArrayList<Integer> pocer_hodnot = new ArrayList<Integer>(pocet_suradnic);
+        System.out.println("Mam priemer");
         for (int i = 0; i < pocet_suradnic; i++) {
             pocer_hodnot.add(pocet_roznych_hodnot(i));
             result.add(priemer);
         }
+        System.out.println("Idem kontrolovat");
         while (!kontrola(result)) {
             int temo = pocer_hodnot.indexOf(Collections.max(pocer_hodnot));
             pocer_hodnot.set(temo, 0);
             result.set(temo, result.get(temo) + 1);
         }
-
+        System.out.println(result);
+        rozdelenie = result;
         return result;
     }
 
 
     public ArrayList<ArrayList<Double>> get_index_grid() {
+        System.out.println("Idem rozdelit index");
         ArrayList<ArrayList<Double>> result = new ArrayList<ArrayList<Double>>();
         ArrayList<Integer> delenia = getRozdelenieIndexu_pocetnost();
         for (int i = 0; i < pocet_suradnic; i++) {
