@@ -18,6 +18,7 @@ public class Grid_index implements Serializable {
     int pocet_suradnic;
     int pocetStranok;
     int kapacita;
+    int pocet_pristupov = 0;
     Cache cache;
 
 
@@ -25,7 +26,7 @@ public class Grid_index implements Serializable {
         velkost_stranky = maker.velkost_stranky;
         pocet_objektov = maker.pocet_objektov;
         struktura = maker.get_index_grid();
-        rozdelenie_indexu = maker.getRozdelenieIndexu_pocetnost();
+        rozdelenie_indexu = maker.rozdelenie;
         pocet_suradnic = maker.pocet_suradnic;
         kapacita = maker.kapacita();
         int pocet = 1;
@@ -33,7 +34,7 @@ public class Grid_index implements Serializable {
             pocet *= rozdelenie_indexu.get(i);
         }
         pocetStranok = pocet;
-        cache = new Cache(10, velkost_stranky, file);
+        cache = new Cache(1000, velkost_stranky, file);
         cache.open(true);
         cache.close();
 
@@ -62,7 +63,6 @@ public class Grid_index implements Serializable {
 
     public void add(Point p) {
         cache.getVirtual_Page(this, cislo_stranky(p)).add(p);
-        pocet_objektov++;
 
     }
 
@@ -126,9 +126,10 @@ public class Grid_index implements Serializable {
         }
 
         generuj_range(0, h_h, d_h, postupnost, result, pomocne);
-        System.out.println("Pred kontrolou " + result);
+        System.out.println("Pred objektov pred kontrolou " + result.size());
+        //System.out.println("Pred kontrolou " + result);
         result = kontrola_hranic_range(result, dlzdky, dolny_roh);
-
+        System.out.println("Pocet pristupov "+ pocet_pristupov);
         return result;
     }
 
@@ -161,6 +162,7 @@ public class Grid_index implements Serializable {
                 for (int j = 0; j < pocet_suradnic; j++)
                     cislo_stranky += pomocne[j] * postupnost[j];
                 if (cache.platne_stranky.contains(cislo_stranky)) {
+                    pocet_pristupov++;
                     Virtual_Page page = cache.loadPage(this, cislo_stranky);
                     for (Real_Page p : page.getObsah())
                         result.addAll(p.getZoznam());

@@ -13,7 +13,7 @@ import java.util.*;
  * Time: 19:46:14
  * To change this template use File | Settings | File Templates.
  */
-public class Cache implements Serializable{
+public class Cache implements Serializable {
 
     private Map<Integer, Virtual_Page> offset_map;
     private LinkedList<Integer> offset;
@@ -30,7 +30,7 @@ public class Cache implements Serializable{
         this.kapacita = kapacita;
         this.pageSize = pageSize;
         this.file = file;
-        offset_map = new HashMap<Integer, Virtual_Page>(kapacita );
+        offset_map = new HashMap<Integer, Virtual_Page>(kapacita + 1, 1.0F);
         offset = new LinkedList<Integer>();
         platne_stranky = new HashSet<Integer>();
     }
@@ -49,7 +49,6 @@ public class Cache implements Serializable{
             return page;
 
         }
-
 
 
     }
@@ -84,8 +83,8 @@ public class Cache implements Serializable{
 
     public boolean isOpen() {
 
-		return raf != null;
-	}
+        return raf != null;
+    }
 
     public void close() {
 
@@ -139,6 +138,8 @@ public class Cache implements Serializable{
             page.getObsah().get(i).save(buffer);
             buffer.rewind();
             try {
+
+
                 channel.write(buffer, page.getObsah().get(i).iD * pageSize);
             } catch (IOException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

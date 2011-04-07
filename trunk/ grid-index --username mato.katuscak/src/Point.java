@@ -31,13 +31,14 @@ public class Point {
         suradnice = new ArrayList<Double>();
         double suradnica = 0;
         for (int i=0; i< pocet_suradnic; i++){
-            int temp = (int)(Math.random()*1000);
-            suradnica = (double)temp/1000; 
-            System.out.print(suradnica+" ");
+            int temp = (int)(Math.random()*100000);
+            suradnica = (double)temp/100000;
+            //System.out.print(suradnica+" ");
             suradnice.add(suradnica);
         }
-        System.out.println();
+        //System.out.println();
     }
+
 
 
 

@@ -37,9 +37,12 @@ public class Point_Storage {
         while (sc.hasNextLine()){
             String line = sc.nextLine();
             lines = new Scanner(line);
+
             ArrayList<Double> suradnice = new ArrayList<Double>();
             while(lines.hasNext()){
-                double cislo = lines.nextDouble();
+                String a = lines.next();
+                //double cislo = lines.nextDouble();
+                double cislo = Double.valueOf(a);
                 suradnice.add(cislo);
             }
             Point bod = new Point(iD,suradnice);
