@@ -2,6 +2,7 @@ import com.sun.corba.se.spi.ior.Identifiable;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,14 +14,14 @@ import java.util.ArrayList;
 public class Point {
 
     private int iD;
-    private ArrayList<Double> suradnice;
+    private List<Double> suradnice;
 
     @Override
     public String toString() {
         return suradnice.toString()+" iD " + iD;
     }
 
-    public Point(int iD, ArrayList<Double> suradnice) {
+    public Point(int iD, List<Double> suradnice) {
         this.iD = iD;
         this.suradnice = suradnice;
     }
@@ -50,7 +51,7 @@ public class Point {
         this.iD = iD;
     }
 
-    public ArrayList<Double> getSuradnice() {
+    public List<Double> getSuradnice() {
         return suradnice;
     }
 
