@@ -51,7 +51,7 @@ public class Virtual_Page {
     private void kontrola_pretecenia(Point p) {
 
         int first_page_size = 4+4*(obsah.size()-1)+4+obsah.get(0).getZoznam().size()*p.size();
-        System.out.println("Velkost 1 strany"+first_page_size);
+        //System.out.println("Velkost 1 strany"+first_page_size);
         if(index.velkost_stranky <= first_page_size){
             Point remove = obsah.get(0).getZoznam().get(0);
             obsah.get(0).getZoznam().remove(remove);

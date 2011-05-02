@@ -9,7 +9,7 @@ import java.util.List;
  * Time: 12:17:11
  * To change this template use File | Settings | File Templates.
  */
-public class Grid_index implements Serializable {
+public class Grid_index implements Serializable, IGrid_Index {
 
     int velkost_stranky;
     int pocet_objektov;
@@ -126,10 +126,10 @@ public class Grid_index implements Serializable {
         }
 
         generuj_range(0, h_h, d_h, postupnost, result, pomocne);
-        System.out.println("Pred objektov pred kontrolou " + result.size());
+        //System.out.println("Pred objektov pred kontrolou " + result.size());
         //System.out.println("Pred kontrolou " + result);
         result = kontrola_hranic_range(result, dlzdky, dolny_roh);
-        System.out.println("Pocet pristupov "+ pocet_pristupov);
+
         return result;
     }
 
