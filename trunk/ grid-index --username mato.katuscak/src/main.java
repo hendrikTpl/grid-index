@@ -16,13 +16,15 @@ public class main {
 
     public static void main(String[] args) throws Exception {
 
-//        System.out.println("HelloWorld");
-//        File f = new File("C:\\vstup.txt");
-//        File file = new File("C:\\test.index");
-        File index_file = new File("C:\\Testy\\100000_10_un.idf");
-//        Point_Storage point = new Point_Storage(f);
+//        System.out.println("HelloWorld")
+//        File f = new File("C:\\Testy\\100000_10_exp.txt");
+//        File file = new File("C:\\100000_10_exp.index");
+        File index_file = new File("C:\\Testy\\100000_10_gauss.idf");
+        // Point_Storage point = new Point_Storage(f);
 ////        Point_Storage point = new Point_Storage(2000000, 10);
-//        grid = new Index_Maker(2, 100, point);
+//        long start = System.currentTimeMillis();
+//        grid = new Index_Maker(10, 1500, point);
+
 //
 //        System.out.println(grid.pocetStranok());
 //
@@ -30,15 +32,17 @@ public class main {
 //        //System.out.println(grid.pocet_roznych_hodnot(0));
 //        //System.out.println(grid.pocet_roznych_hodnot(1));
 //        //System.out.println(grid.pocet_roznych_hodnot(2));
-//        //System.out.println(grid.get_index_grid());
-//
+        //System.out.println(grid.get_index_grid());
+
 //        Grid_index index = new Grid_index(grid, file);
 //        index.open();
 //        for (int i = 0; i < grid.pocet_objektov; i++) {
 //            //System.out.println(index.cislo_stranky(grid.storage.getPoints().get(i)));
 //            //System.out.println(grid.storage.getPoints().get(i));
 //        }
+
 //        System.out.println("Pocet Objektov index1 " + grid.pocet_objektov);
+//
 //        for (int i = 0; i < grid.pocet_objektov; i++) {
 //            index.add(grid.storage.getPoints().get(i));
 //
@@ -62,6 +66,9 @@ public class main {
 //        }
 //        System.out.println("Pocet realne v indexe " + pocet);
 //        index.close();
+//        long end = System.currentTimeMillis();
+//
+//        System.out.println("Execution time was " + (end - start) + " ms.");
 //        index.serializeTo(index_file);
 //        PrintWriter pw2 = new PrintWriter(new File("C:\\1000000n_10.txt"));
 //        for(int i = 0; i<1000000; i++){
@@ -89,40 +96,42 @@ public class main {
 //        Generator.generateExponentialDouble(100000,10,hranice,1,1,new File("C:\\100000_10_exp.txt"));
         Grid_index index2 = Grid_index.serializeFrom(index_file);
 //        index2.open();
-//        //System.out.println("Pocet realne v indexe " + pocet);
-//        System.out.println("Pocet Objektov index2 " + index2.pocet_objektov);
+////        //System.out.println("Pocet realne v indexe " + pocet);
+////        System.out.println("Pocet Objektov index2 " + index2.pocet_objektov);
+////
+////        index2.close();
+        index2.open();
+//        System.out.println(index2.struktura);
+//
+//
+//        System.out.println("Pocet vs. stranok " + index2.pocetStranok);
+//
+////        ArrayList<Double> dlzky = new ArrayList<Double>();
+////        dlzky.add(4.2);
+////        dlzky.add(4.2);
+////        dlzky.add(4.2);
+////        dlzky.add(4.2);
+////        dlzky.add(1.1);
+//
+//
+        List<Double> suradnice = Arrays.asList(0., 0., 0., 0., 0., 0., 0., 0., 0., 0.);
+        List<Double> dlzky = Arrays.asList(.5, 1.5, 2.5, 0.5, 1.5, 1.4, 1.5, 1.5, 2.5, 1.5);
+//
+//
+        Point p = new Point(1, suradnice);
+//
+//
+        for (int i = 0; i < 15; i++) {
+            long start = System.currentTimeMillis();
+            //System.out.println("Pocet objektov po kontrole hladania " + index2.hladaj_Rectangle(p, dlzky).size());
+            index2.hladaj_Rectangle(p, dlzky).size();
+            long end = System.currentTimeMillis();
+            //System.out.println("Execution time was " + (end - start) + " ms.");
+            System.out.println( (end - start));
+        }
+        System.out.println("Pocet pristupov "+ index2.pocet_pristupov/15);
 //
 //        index2.close();
-        index2.open();
-        System.out.println(index2.struktura);
-
-
-        System.out.println("Pocet vs. stranok " + index2.pocetStranok);
-
-//        ArrayList<Double> dlzky = new ArrayList<Double>();
-//        dlzky.add(4.2);
-//        dlzky.add(4.2);
-//        dlzky.add(4.2);
-//        dlzky.add(4.2);
-//        dlzky.add(1.1);
-
-
-        List<Double> suradnice = Arrays.asList(0., 0., 0., 0., 0., 0., 0., 0., 0., 0.);
-        List<Double> dlzky = Arrays.asList(3., 1., 3., 3., 2., 3., 2., 3., 3., 3.);
-
-
-        Point p = new Point(1, suradnice);
-
-        long start = System.currentTimeMillis();
-
-
-        //System.out.println("Vysledok hladania" + index2.hladaj_Rectangle(p, dlzky));
-        System.out.println("Pocet objektov po kontrole hladania " + index2.hladaj_Rectangle(p, dlzky).size());
-        long end = System.currentTimeMillis();
-
-        System.out.println("Execution time was " + (end - start) + " ms.");
-
-        index2.close();
 
 
     }

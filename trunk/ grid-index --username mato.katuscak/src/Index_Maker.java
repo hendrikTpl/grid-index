@@ -8,7 +8,7 @@ import java.util.*;
  * Time: 19:40
  * To change this template use File | Settings | File Templates.
  */
-public class Index_Maker {
+public class Index_Maker  {
     int velkost_stranky;
     int pocet_objektov;
     int pocet_suradnic;
@@ -32,6 +32,9 @@ public class Index_Maker {
         this.storage = storage;
         this.pocet_objektov = storage.getPocet_objektov();
 
+    }
+
+    public Index_Maker() {
     }
 
 
