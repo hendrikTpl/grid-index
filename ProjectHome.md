@@ -1,0 +1,1 @@
+This is a structure to hold n-dimension data and searching over it. This data will be save to the file that is more effective because we do not need search whole data.
